@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+ 
+	<context:component-scan base-package="com.studytonight.examples" />
+<!-- 	<bean id="seller" class="id.alterra.domain.Seller"> -->
+<!-- 		<property name="id" value="1"></property> -->
+<!-- 		<property name="name" value="Pramoedya Ananta Toer"></property> -->
+<!-- 		<property name="birthDate" value="-16401"></property> -->
+<!-- 	</bean> -->
+
+	<bean id="seller" class="id.alterra.domain.Seller">
+		<constructor-arg name="name" value="Pramoedya Ananta Toer"></constructor-arg>
+		<constructor-arg name="id" value="1"></constructor-arg>
+		<constructor-arg name="birthDate" value="-16401"></constructor-arg>
+	</bean>
+	
+<!-- 	<bean id="product" class="id.alterra.domain.Product"> -->
+<!-- 	<constructor-arg ref="seller"></constructor-arg> -->
+<!-- 	</bean> -->
+	
+	<bean id="product1" class="id.alterra.domain.Product">
+		<property name="id" value="1"></property>
+		<property name="name" value="Baju Bekas"></property>
+		<property name="description" value="Ini baju Toer"></property>
+		<property name="seller" ref="seller"></property>
+	</bean>
+	
+	<bean id="product2" class="id.alterra.domain.Product">
+		<property name="id" value="2"></property>
+		<property name="name" value="Bauku Bekas"></property>
+		<property name="description" value="Ini buku Toer"></property>
+		<property name="seller" ref="seller"></property>
+	</bean>
+	
+	<bean id="productRepository" class="id.alterra.repository.impl.ProductRepositoryImpl">
+	<property name="productMap">
+			<map>
+				<entry key="1" value-ref="product1"></entry>
+				<entry key="2" value-ref="product2"></entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="productService" class="id.alterra.service.impl.ProductServiceImpl">
+<!-- 		<property name="productRepository" ref="productRepository"></property> -->
+<constructor-arg ref="productRepository"></constructor-arg>
+	</bean>
+	
+	
+</beans>

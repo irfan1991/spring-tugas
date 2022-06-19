@@ -1,0 +1,45 @@
+logging:
+  level:
+    '[id.alterra.catalog]': TRACE
+app:
+  currency: IDR
+  timezone: Asia/Jakarta
+  welcome-text: Welcom, Are you ready?
+cloud:
+  api-key: ${CLOUD_KEY}
+server:
+  port: 8081
+  
+---
+spring: 
+  config :
+     activate : 
+        on-profile: development
+  
+server:
+  port: 8002
+  
+app:
+  welcome-text: Hello World from Tedy, this is development server
+  
+  
+---
+spring: 
+  config :
+     activate : 
+        on-profile: test
+  
+server:
+  port: 8083  
+  
+  
+  
+---
+spring: 
+  config :
+     activate : 
+        on-profile: production
+  
+server:
+  port: 8084  
+ 
