@@ -25,5 +25,14 @@ public class ProductRepositoryImpl implements ProductRepository {
 		return productList;
 	}
 
+	@Override
+	public void save(Product product) {
+		//size = 2, -> 1,2
+		int size = productMap.size();
+		product.setId((long) size+1);
+		productMap.put(product.getId(), product);
+		
+	}
+
 
 }

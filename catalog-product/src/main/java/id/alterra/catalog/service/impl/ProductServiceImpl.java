@@ -6,13 +6,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import id.alterra.catalog.domain.Product;
+import id.alterra.catalog.domain.Seller;
+import id.alterra.catalog.dto.ProductCreateDTO;
 import id.alterra.catalog.dto.ProductDetailDTO;
 import id.alterra.catalog.repository.ProductRepository;
 import id.alterra.catalog.service.ProductService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @AllArgsConstructor
 @Service("productService")
 public class ProductServiceImpl implements ProductService {
@@ -32,15 +32,29 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductDetailDTO> findProductListDetail() {
+	public List<Product> findProductListDetail() {
 		List<Product> products = productRepository.findAll();
 		return products.stream().map((b)->{
-			ProductDetailDTO dto = new ProductDetailDTO();
-			dto.setHarga(1000);
-			dto.setStock(10);
-			dto.setProductId(1L);
+			Product dto = new Product();
+			dto.setId(b.getId());
+			dto.setName(b.getName());
+			dto.setDescription(b.getDescription());
+			dto.setSeller(b.getSeller());
 			return dto;
 		}).collect(Collectors.toList());
+	}
+
+	@Override
+	public void createNewProduct(ProductCreateDTO dto) {
+		Seller seller = new Seller();
+		seller.setName(dto.getSellerName());
+	
+		Product product = new Product();
+		product.setSeller(seller);
+		product.setName(dto.getProductName());
+		product.setDescription(dto.getDescription());
+		productRepository.save(product);
+		
 	}
 
 }
