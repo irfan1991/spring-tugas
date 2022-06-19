@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import id.alterra.catalog.dto.HelloMessageResponseDTO;
 import id.alterra.catalog.service.GreetingService;
 
 @RestController
@@ -20,12 +21,14 @@ public class HelloController {
 	}
 
 	@GetMapping("/hello")
-	public String helloWorld() {
-//		log.trace("this is log TRACE");
-//		log.debug("this is log DEBUG");
-//		log.info("this is log INFO");
-//		log.warn("this is log WARN");
-//		log.error("this is log ERROR");
-		return greetingService.sayGreeting();
+	public HelloMessageResponseDTO helloWorld() {
+		log.trace("this is log TRACE");
+		log.debug("this is log DEBUG");
+		log.info("this is log INFO");
+		log.warn("this is log WARN");
+		log.error("this is log ERROR");
+		HelloMessageResponseDTO dto = new HelloMessageResponseDTO();
+		dto.setMessage(greetingService.sayGreeting());
+		return dto;
 	}
 }
